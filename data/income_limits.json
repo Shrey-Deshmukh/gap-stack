@@ -1,0 +1,136 @@
+{
+ "county": "Orange",
+ "checked": "2026-11-07",
+ "tables": {
+  "state": {
+   "name": "HCD 2026 State Income Limits (Revised)",
+   "revision_date": "2026-06-23",
+   "replaces": "2026 State Income Limits dated 2026-05-29",
+   "source_url": "https://www.hcd.ca.gov/sites/default/files/docs/grants-and-funding/income-limits-2026.pdf",
+   "page": 11,
+   "area_median_income_4p": 138600,
+   "by_household_size": {
+    "extremely_low": [
+     27600,
+     31550,
+     35500,
+     39400,
+     42600,
+     45750,
+     50040,
+     55720
+    ],
+    "very_low": [
+     65150,
+     74450,
+     83750,
+     93050,
+     100500,
+     107950,
+     115400,
+     122850
+    ],
+    "low": [
+     104200,
+     119100,
+     134000,
+     148850,
+     160800,
+     172700,
+     184600,
+     196500
+    ],
+    "median": [
+     97000,
+     110900,
+     124750,
+     138600,
+     149700,
+     160800,
+     171850,
+     182950
+    ],
+    "moderate": [
+     116400,
+     133050,
+     149650,
+     166300,
+     179600,
+     192900,
+     206200,
+     219500
+    ]
+   },
+   "note": "In the PDF text layer the 4-person median (138,600) prints at the end of the row; it is placed at index 3 here, matching the stated Area Median Income."
+  },
+  "home": {
+   "name": "HCD 2026 State HOME Income Limits",
+   "revision_date": "2026-06-01",
+   "source_url": "https://www.hcd.ca.gov/sites/default/files/docs/grants-and-funding/2026-california-HOME-income-limits_0.pdf",
+   "page": 2,
+   "by_household_size": {
+    "very_low_50": [
+     65150,
+     74450,
+     83750,
+     93050,
+     100500,
+     107950,
+     115400,
+     122850
+    ],
+    "low_80": [
+     104200,
+     119100,
+     134000,
+     148850,
+     160800,
+     172700,
+     184600,
+     196500
+    ]
+   }
+  }
+ },
+ "statute": {
+  "section": "Health and Safety Code 50052.5(b)",
+  "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=50052.5",
+  "read_via": "https://codes.findlaw.com/ca/health-and-safety-code/hsc-sect-50052-5/ (leginfo blocks scripts)",
+  "checked": "2026-11-07",
+  "bands": {
+   "extremely_low": {
+    "label": "Extremely low income",
+    "share": 0.3,
+    "ami_mult": 0.3,
+    "max_ami": 30,
+    "cite": "50052.5(b)(1)",
+    "quote": "the product of 30 percent times 30 percent of the area median income adjusted for family size appropriate for the unit"
+   },
+   "very_low": {
+    "label": "Very low income",
+    "share": 0.3,
+    "ami_mult": 0.5,
+    "max_ami": 50,
+    "cite": "50052.5(b)(2)",
+    "quote": "the product of 30 percent times 50 percent of the area median income adjusted for family size appropriate for the unit"
+   },
+   "low": {
+    "label": "Lower income (to 80% AMI)",
+    "share": 0.3,
+    "ami_mult": 0.7,
+    "max_ami": 80,
+    "cite": "50052.5(b)(3)",
+    "quote": "the product of 30 percent times 70 percent of the area median income adjusted for family size appropriate for the unit"
+   },
+   "moderate": {
+    "label": "Moderate income (to 120% AMI)",
+    "share": 0.35,
+    "ami_mult": 1.1,
+    "max_ami": 120,
+    "cite": "50052.5(b)(4)",
+    "quote": "nor exceed the product of 35 percent times 110 percent of area median income adjusted for family size appropriate for the unit"
+   }
+  },
+  "family_size_rule": "Family size appropriate for the unit = bedrooms + 1 (HCD regulation, 25 CCR 6932). Treat as ASSUMPTION until checked against the regulation text."
+ }
+}

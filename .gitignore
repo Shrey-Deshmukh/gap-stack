@@ -1,0 +1,11 @@
+.env
+node_modules/
+raw/
+.claude/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Vercel build output (copied from data/ at deploy time)
+public/data/
+.vercel

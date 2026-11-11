@@ -1,0 +1,17 @@
+# Render Blueprint: New > Blueprint > pick this repo. No build step, no dependencies.
+services:
+  - type: web
+    name: gap-stack
+    runtime: node
+    plan: free
+    branch: abhiraj
+    buildCommand: node --version
+    startCommand: node server.mjs
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: CLAUDE_MODEL
+        value: claude-sonnet-5-5
+      - key: ANTHROPIC_API_KEY
+        sync: false # paste in the Render dashboard; never commit it

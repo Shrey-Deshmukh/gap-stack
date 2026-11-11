@@ -1,0 +1,97 @@
+{
+ "checked": "2026-11-07",
+ "note": "Only amounts read on the program's own page are counted. 'unknown' amounts are listed but never added to the stack.",
+ "programs": [
+  {
+   "id": "santa_ana_mfh",
+   "name": "Santa Ana My First Home",
+   "type": "buyer",
+   "amount": {
+    "kind": "fixed",
+    "value": 120000
+   },
+   "terms": "Up to $120,000, 0% interest, 30 or 45-year deferred loan",
+   "max_ami": 80,
+   "cities": [
+    "SANTA ANA"
+   ],
+   "status": "confirmed",
+   "status_note": "Page says applications are open, currently only for 80% AMI households.",
+   "source_url": "https://santa-ana.org/my-first-home"
+  },
+  {
+   "id": "fhlb_wish",
+   "name": "FHLBank San Francisco WISH",
+   "type": "buyer",
+   "amount": {
+    "kind": "fixed",
+    "value": 32837
+   },
+   "terms": "2026: up to $32,837 matching grant for first-time buyers at or below 80% of HUD AMI",
+   "max_ami": 80,
+   "cities": null,
+   "status": "funds_unconfirmed",
+   "status_note": "Allocated through participating member banks; confirm the buyer's lender still has 2026 WISH funds.",
+   "source_url": "https://fhlbsf.com/products/community-programs-grants/wish"
+  },
+  {
+   "id": "calhfa_myhome",
+   "name": "CalHFA MyHome",
+   "type": "buyer",
+   "amount": {
+    "kind": "pct_price",
+    "value": 0.035
+   },
+   "terms": "Deferred junior loan up to the lesser of 3.5% of price (FHA) or 3% (conventional)",
+   "max_ami": null,
+   "cities": null,
+   "status": "confirmed",
+   "status_note": "Program page live. CalHFA income limits apply (not modeled; check the CalHFA table).",
+   "source_url": "https://www.calhfa.ca.gov/homebuyer/programs/myhome.htm"
+  },
+  {
+   "id": "calhfa_dream",
+   "name": "CalHFA Dream For All",
+   "type": "buyer",
+   "amount": {
+    "kind": "pct_price",
+    "value": 0.2,
+    "cap": 150000
+   },
+   "terms": "Shared-appreciation loan up to 20% of price, max $150,000; voucher and randomized drawing",
+   "max_ami": 150,
+   "cities": null,
+   "status": "funds_unconfirmed",
+   "status_note": "Funds go out by voucher drawing; reports say earlier rounds ran out. Never count as certain money.",
+   "source_url": "https://calhfa.ca.gov/dream/"
+  },
+  {
+   "id": "calhome",
+   "name": "HCD CalHome (via Homeownership Super NOFA)",
+   "type": "developer",
+   "amount": {
+    "kind": "unknown"
+   },
+   "terms": "State loans to nonprofits and local agencies for down payment, rehab and self-help housing",
+   "max_ami": 80,
+   "cities": null,
+   "status": "unknown",
+   "status_note": "Award size and round dates not confirmed today. Listed, not counted.",
+   "source_url": "https://www.hcd.ca.gov/grants-and-funding/programs-active/calhome"
+  },
+  {
+   "id": "ochft",
+   "name": "Orange County Housing Finance Trust",
+   "type": "developer",
+   "amount": {
+    "kind": "unknown"
+   },
+   "terms": "Countywide housing NOFAs; homeownership terms not confirmed",
+   "max_ami": null,
+   "cities": null,
+   "status": "unknown",
+   "status_note": "Programs page shows a NOFA; no homeownership amount confirmed. Listed, not counted.",
+   "source_url": "https://ochft.org/programs"
+  }
+ ]
+}

@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gap Stack</title>
+<meta name="description" content="The funding gap on each affordable home in Orange County, how much of it comes from time to permit, and who can pay for the rest.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="bg-orbs" aria-hidden="true"><span></span><span></span><span></span></div>
+
+<header class="topbar">
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="18" width="7" height="11" rx="2"/><rect x="12.5" y="11" width="7" height="18" rx="2"/><rect x="22" y="4" width="7" height="25" rx="2" class="hot"/></svg>
+    <div>
+      <div class="brand-name">Gap Stack</div>
+      <div class="brand-sub">Fund it, with Clear it's clock built in</div>
+    </div>
+  </div>
+  <nav class="topnav">
+    <a href="#" data-tab="bill"><span class="step-num">1</span>The bill</a><a href="#" data-tab="time"><span class="step-num">2</span>Time</a><a href="#" data-tab="rate"><span class="step-num">3</span>Rates</a><a href="#" data-tab="donor"><span class="step-num">4</span>Donors</a><a href="#" data-tab="memo"><span class="step-num">5</span>Memo</a>
+  </nav>
+  <div class="top-actions">
+    <span class="pill" id="claudePill">Claude: checking</span>
+    <button class="btn ghost" id="openSources">Sources <span class="count" id="srcCount">0</span></button>
+    <button class="btn ghost icon" id="themeBtn" title="Toggle theme" aria-label="Toggle theme">◐</button>
+  </div>
+</header>
+
+<main>
+  <div class="tab-context" id="tabContext"></div>
+  <div class="tab-page" id="page-bill">
+  <div class="summary-bar reveal">
+    <div class="sb-project">
+      <div class="sb-title" id="heroSub">8 homes in Santa Ana</div>
+      <div class="sb-meta">
+        <b class="src" data-k="rate" id="heroRate">7.18%</b> 30-yr rate &nbsp;·&nbsp;
+        <b class="src" data-k="ami">$138,600</b> OC AMI &nbsp;·&nbsp;
+        <b class="src" data-k="apr" id="heroProjects">21,477</b> state projects
+      </div>
+    </div>
+    <div class="sb-stats">
+      <div class="sb-stat"><span>Gap / home</span><b class="src" data-k="gap" id="heroGap">—</b></div>
+      <div class="sb-stat hot"><span>Permit wait</span><b class="src" data-k="time" id="heroTime">—</b></div>
+      <div class="sb-stat good"><span>Programs</span><b class="src" data-k="subsidies" id="heroSubs">—</b></div>
+      <div class="sb-stat raise"><span>Left to raise</span><b class="src" data-k="fundraising" id="heroLeft">—</b></div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <section class="grid" id="bill">
+    <aside class="panel form-panel reveal">
+      <div class="start-callout">
+        <span class="start-badge">Start here</span>
+        <span>Pick a city and enter your homes — the gap updates live.</span>
+      </div>
+      <div class="panel-head">
+        <h2>Your project</h2>
+        <div class="presets">
+          <button class="chip" data-preset="default">New project</button>
+          <button class="chip" data-preset="synthetic" title="The organizers' worked example. Every number is synthetic.">Organizers' example</button>
+        </div>
+      </div>
+      <div id="syntheticBanner" class="banner hidden">Showing the organizers' <b>SYNTHETIC</b> one-home bill. Every number is made up and must return the $95k gap.</div>
+
+      <label class="field"><span>City</span>
+        <select id="city"></select>
+      </label>
+      <div class="city-hint" id="cityHint"></div>
+
+      <div class="field"><span>Homes and who they are for</span>
+        <div id="homeRows"></div>
+        <button class="btn small ghost" id="addRow">+ Add home type</button>
+      </div>
+
+      <div class="field"><span>Cost per home <span class="tag ASSUMPTION">ASSUMPTION</span></span>
+        <div class="cost-grid">
+          <label>Land and building<input type="number" step="5000" id="costLand"></label>
+          <label>Construction<input type="number" step="5000" id="costCons"></label>
+          <label>Fees, design, legal<input type="number" step="5000" id="costFees"></label>
+          <label>Rent while waiting<input type="number" step="5000" id="rentWait"></label>
+        </div>
+        <small class="muted">Defaults copy the organizers' worked example. Replace with your pro forma.</small>
+      </div>
+
+      <details class="assume">
+        <summary>Assumptions you can change</summary>
+        <div class="cost-grid" id="assumeGrid"></div>
+      </details>
+    </aside>
+
+    <div class="stack-col" id="stackCol">
+      <div class="stack-hint" id="stackHint">
+        <div class="sh-arrow">&#8592;</div>
+        <p class="sh-title">Start by entering your project</p>
+        <p class="muted">Select a city and your homes on the left — the gap breakdown and funding stack will appear here.</p>
+      </div>
+      <div class="panel reveal">
+        <div class="panel-head">
+          <div>
+            <h2>One home's bill</h2>
+            <p class="muted" id="billSub">Cost to create, then who pays it, stacked up to the cost line.</p>
+          </div>
+          <div class="tabs" id="homeTabs"></div>
+        </div>
+        <div class="waterfall" id="waterfall"></div>
+        <div class="legend">
+          <span><i class="sw land"></i>Land</span><span><i class="sw cons"></i>Construction</span><span><i class="sw fees"></i>Fees</span><span><i class="sw time"></i>Time to permit</span><span><i class="sw fam"></i>Family</span><span><i class="sw progs"></i>Programs</span><span><i class="sw ghost"></i>Unconfirmed</span><span><i class="sw raise"></i>Fundraising</span>
+        </div>
+        <div class="family-explain" id="familyExplain"></div>
+      </div>
+
+      <div class="panel reveal" id="programsPanel">
+        <div class="panel-head">
+          <div>
+            <h2>Who can fill it</h2>
+            <p class="muted" id="programsMeta">Only confirmed amounts are counted.</p>
+          </div>
+          <div class="prog-panel-actions">
+            <label class="switch"><input type="checkbox" id="countUnconf"><span></span>Unconfirmed</label>
+            <button class="btn small ghost" id="togglePrograms">Show programs ▾</button>
+          </div>
+        </div>
+        <div class="programs-body" id="programsBody">
+          <div class="programs" id="programs"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+
+  <div class="tab-page" id="page-time">
+  <!-- TIME -->
+  <section class="section" id="time">
+    <div class="section-head reveal">
+      <div class="kicker">Lane 3: Fund it</div>
+      <h2>Time to permit is a line on the bill.</h2>
+      <p class="lede small">Every month between approval and building permit, the nonprofit pays interest, taxes and insurance on land nobody lives on yet. We measured each Orange County city from the state's own Annual Progress Report records.</p>
+    </div>
+    <div class="time-grid">
+      <div class="panel reveal">
+        <div class="tl-head">
+          <h3 id="tlCity">Santa Ana</h3>
+          <span class="conf" id="tlConf"></span>
+        </div>
+        <div class="timeline" id="timeline"></div>
+        <div class="carry" id="carry"></div>
+        <div class="compare">
+          <label>Same project in
+            <select id="compareCity"></select>
+          </label>
+          <div class="compare-out" id="compareOut"></div>
+        </div>
+        <div class="insight" id="insight"></div>
+      </div>
+      <div class="panel reveal">
+        <div class="panel-head">
+          <div>
+            <h3>Orange County, ranked by months from approval to permit</h3>
+            <p class="muted">Median for non-ADU projects. Bar label = time cost per home for your project. Click a city to use it.</p>
+          </div>
+        </div>
+        <div class="board" id="board"></div>
+        <p class="muted tiny" id="boardNote"></p>
+      </div>
+    </div>
+  </section>
+
+  </div>
+
+  <div class="tab-page" id="page-rate">
+  <!-- RATE -->
+  <section class="section" id="rate">
+    <div class="section-head reveal">
+      <div class="kicker">Scenario M02</div>
+      <h2>When the rate moves, the gap moves.</h2>
+      <p class="lede small">The family's price is capped by income, so a higher mortgage rate means a smaller loan, a lower price and a bigger gap. Drag the rate.</p>
+    </div>
+    <div class="panel rate-panel reveal">
+      <div class="rate-left">
+        <div class="rate-big"><span id="rateVal">7.18</span>%</div>
+        <input type="range" id="rateSlider" min="4" max="9" step="0.01">
+        <div class="rate-chips">
+          <button class="chip" data-rate="7.40">7.40% Oct 8</button>
+          <button class="chip" data-rate="7.18">7.18% Nov 5 (latest)</button>
+          <button class="chip" data-rate="6.00">6.00% what-if</button>
+        </div>
+        <div class="rate-out" id="rateOut"></div>
+      </div>
+      <div class="rate-right">
+        <svg id="spark" viewBox="0 0 600 220" preserveAspectRatio="none" aria-label="30-year mortgage rate, last two years"></svg>
+        <div class="muted tiny">Freddie Mac PMMS weekly 30-year fixed, last 104 weeks. <a class="src-link" data-k="rate" href="#">source</a></div>
+      </div>
+    </div>
+  </section>
+
+  </div>
+
+  <div class="tab-page" id="page-donor">
+  <!-- DONOR -->
+  <section class="section" id="donor">
+    <div class="section-head reveal">
+      <div class="kicker">Scenario M03</div>
+      <h2>What does a gift actually pay for?</h2>
+    </div>
+    <div class="panel donor-panel reveal">
+      <div class="donor-input">
+        <label>Gift<input type="number" id="gift" value="25000" step="1000"></label>
+        <input type="range" id="giftSlider" min="1000" max="250000" step="1000" value="25000">
+      </div>
+      <div class="donor-cards" id="donorCards"></div>
+    </div>
+  </section>
+
+  </div>
+
+  <div class="tab-page" id="page-memo">
+  <!-- MEMO -->
+  <section class="section" id="memo">
+    <div class="section-head reveal">
+      <div class="kicker">Claude writes, the engine counts</div>
+      <h2>A one-page funder memo, from these exact numbers.</h2>
+      <p class="lede small">Claude never does the arithmetic. It gets the engine's output, with every tag and source, and writes it up for a board. A person reads it before it goes anywhere. Nothing is sent.</p>
+    </div>
+    <div class="memo-grid">
+      <div class="panel reveal">
+        <button class="btn primary" id="memoBtn"><span class="spark-ico">✦</span> Write the funder memo</button>
+        <div class="memo-out" id="memoOut"><p class="muted">The memo appears here.</p></div>
+        <div class="memo-actions hidden" id="memoActions">
+          <button class="btn small ghost" id="copyMemo">Copy</button>
+          <span class="muted tiny" id="memoBy"></span>
+        </div>
+      </div>
+      <div class="panel reveal">
+        <h3>Add a program with Claude</h3>
+        <p class="muted">Paste the text of a program page. Claude drafts a row with quoted evidence. You approve it before it enters the stack.</p>
+        <input type="url" id="progUrl" placeholder="Program page URL (for the citation)">
+        <textarea id="progText" rows="7" placeholder="Paste the program page text here"></textarea>
+        <button class="btn" id="progBtn">Draft a program row</button>
+        <div id="progOut"></div>
+      </div>
+    </div>
+  </section>
+
+  </div>
+
+  <div class="tab-nav" id="tabNav"></div>
+
+  <footer class="foot">
+    <div><b>Gap Stack</b> · Claude Impact Lab, UCI × SoCal Affordable Housing · Nov 7, 2026</div>
+  </footer>
+</main>
+
+<!-- Sources drawer -->
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-inner">
+    <div class="drawer-head"><h2>Every number, and where it comes from</h2><button class="btn ghost icon" id="closeSources" aria-label="Close">✕</button></div>
+    <div id="sourceList"></div>
+  </div>
+</div>
+<div class="pop" id="pop" role="tooltip"></div>
+<div class="toast" id="toast"></div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "rm -rf public/data && mkdir -p public/data && cp data/*.json public/data/",
+  "outputDirectory": "public",
+  "functions": {
+    "api/rates.js": {
+      "includeFiles": "data/pmms.json"
+    }
+  }
+}
