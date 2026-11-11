@@ -2,9 +2,11 @@
 
 > **Our tool shows a nonprofit how big the funding gap is on each home, how much of it comes from waiting on the city, and who can help pay for the rest.**
 
-**Lane:** 3 Fund it
-**Built at:** Claude Impact Lab: UCI × SoCal Affordable Housing, November 7, 2026
-**Live demo:** <https://gap-stack.onrender.com> (free plan: first visit after sleep takes 30–50 seconds)
+**Lane:** 3 Fund it  
+**Built at:** Claude Impact Lab: UCI × SoCal Affordable Housing, November 7, 2026  
+**Live demo:** <https://gap-stack.vercel.app> (the hosted version runs Claude features in template mode; see [Try it](#try-it) to turn them on)  
+**Team:** Anisha Mohanty, Abhiraj Kale, Harsh Deodhar, Kush Dang and Shrey Deshmukh  
+**Original hackathon repo:** [ani-sha/claude-impactlab-hackathon](https://github.com/ani-sha/claude-impactlab-hackathon)
 
 ---
 
@@ -73,8 +75,8 @@ Plus three scenarios:
 Needs **Node 18+**. No `npm install` — zero dependencies.
 
 ```bash
-git clone https://github.com/ani-sha/claude-impactlab-hackathon.git
-cd claude-impactlab-hackathon
+git clone https://github.com/Shrey-Deshmukh/gap-stack.git
+cd gap-stack
 node server.mjs
 ```
 
@@ -104,7 +106,7 @@ All data is committed in `data/` — the app runs fully offline without any API 
 
 ### Deploy on Vercel (free)
 
-The repo is ready for Vercel with no changes: `vercel.json` copies `data/` into the static site at build time, and the four server routes run as Vercel functions in `api/` (sharing their logic with `server.mjs` through `lib/core.mjs`).
+This is how the [live demo](https://gap-stack.vercel.app) is hosted. The repo is ready for Vercel with no changes: `vercel.json` copies `data/` into the static site at build time, and the four server routes run as Vercel functions in `api/` (sharing their logic with `server.mjs` through `lib/core.mjs`).
 
 1. In Vercel, choose **Add New → Project** and import this repo. Leave the framework as **Other**; `vercel.json` sets the build command and output folder.
 2. Optional: under **Settings → Environment Variables**, add `ANTHROPIC_API_KEY` (turns on the Claude memo and program reader) and `FRED_API_KEY` (live mortgage rates). Without them, the memo uses a template and rates come from `data/pmms.json`.
